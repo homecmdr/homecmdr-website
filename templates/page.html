@@ -19,7 +19,7 @@
       <div class="sidebar-section">
         <p class="sidebar-section__heading">{{ root_section.title }}</p>
         <ul class="sidebar-nav" role="list">
-          {% for p in root_section.pages | sort(attribute="extra.weight") %}
+          {% for p in root_section.pages %}
           <li class="sidebar-nav__item">
             <a href="{{ p.permalink | safe }}"
                {% if p.permalink == page.permalink %}aria-current="page"{% endif %}>
@@ -37,7 +37,7 @@
               </a>
             </li>
             {% if page.permalink is starting_with(sub.permalink) %}
-              {% for sp in sub.pages | sort(attribute="extra.weight") %}
+              {% for sp in sub.pages %}
               <li class="sidebar-nav__item sidebar-nav__item--child">
                 <a href="{{ sp.permalink | safe }}"
                    {% if sp.permalink == page.permalink %}aria-current="page"{% endif %}>

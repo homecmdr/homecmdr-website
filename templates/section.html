@@ -19,7 +19,7 @@
 
   {% if section.pages %}
   <div class="doc-cards">
-    {% for page in section.pages | sort(attribute="extra.weight") %}
+    {% for page in section.pages %}
     <a class="doc-card" href="{{ page.permalink | safe }}">
       <p class="doc-card__title">{{ page.title }}</p>
       {% if page.description %}
