@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ get_url(path='css/docs.css') | safe }}">
+{% endblock %}
+
+{% block content %}
+<div class="doc-index">
+  <h1 class="doc-index__title">{{ section.title }}</h1>
+  {% if section.description %}
+  <p class="doc-index__desc">{{ section.description }}</p>
+  {% endif %}
+
+  {% if section.content %}
+  <div class="prose" style="margin-bottom: 3rem;">
+    {{ section.content | safe }}
+  </div>
+  {% endif %}
+
+  {% if section.pages %}
+  <div class="doc-cards">
+    {% for page in section.pages | sort(attribute="extra.weight") %}
+    <a class="doc-card" href="{{ page.permalink | safe }}">
+      <p class="doc-card__title">{{ page.title }}</p>
+      {% if page.description %}
+      <p class="doc-card__desc">{{ page.description }}</p>
+      {% endif %}
+    </a>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if section.subsections %}
+  <div class="doc-cards" style="margin-top: 1.5rem;">
+    {% for subsection_path in section.subsections %}
+      {% set subsection = get_section(path=subsection_path) %}
+      <a class="doc-card" href="{{ subsection.permalink | safe }}">
+        <p class="doc-card__title">{{ subsection.title }}</p>
+        {% if subsection.description %}
+        <p class="doc-card__desc">{{ subsection.description }}</p>
+        {% endif %}
+      </a>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

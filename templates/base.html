@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if page.title %}{{ page.title }} — HomeCmdr{% elif section.title %}{{ section.title }} — HomeCmdr{% else %}{{ config.title }}{% endif %}</title>
+  <meta name="description" content="{% if page.description %}{{ page.description }}{% elif section.description %}{{ section.description }}{% else %}{{ config.description }}{% endif %}">
+
+  <link rel="canonical" href="{{ current_url | safe }}">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ current_url | safe }}">
+  <meta property="og:title" content="{% if page.title %}{{ page.title }} — HomeCmdr{% else %}{{ config.title }}{% endif %}">
+  <meta property="og:description" content="{% if page.description %}{{ page.description }}{% else %}{{ config.description }}{% endif %}">
+  <meta property="og:site_name" content="HomeCmdr">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="{{ get_url(path='css/base.css') | safe }}">
+  <link rel="stylesheet" href="{{ get_url(path='css/layout.css') | safe }}">
+  {% block extra_css %}{% endblock %}
+
+  <!-- Favicon placeholder — replace with real assets -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%2358a6ff'/><text x='50%25' y='55%25' dominant-baseline='middle' text-anchor='middle' font-size='18' font-weight='800' font-family='system-ui' fill='%230d1117'>H</text></svg>">
+</head>
+<body>
+
+<!-- ── Site header ──────────────────────────────────────────────────────── -->
+<header class="site-header" role="banner">
+  <div class="site-header__inner">
+    <a class="site-logo" href="{{ get_url(path='/') | safe }}" aria-label="HomeCmdr home">
+      <span class="site-logo__mark" aria-hidden="true">H</span>
+      HomeCmdr
+    </a>
+
+    <nav class="site-nav" aria-label="Primary navigation">
+      {% for item in config.extra.nav %}
+        {% if item.external %}
+          <a class="site-nav__link" href="{{ item.url }}" target="_blank" rel="noopener noreferrer">{{ item.label }}</a>
+        {% else %}
+          <a class="site-nav__link{% if current_path and current_path is starting_with(item.url) and item.url != '/' %} is-active{% endif %}"
+             href="{{ item.url | safe }}">{{ item.label }}</a>
+        {% endif %}
+      {% endfor %}
+    </nav>
+
+    <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation menu">
+      <span class="nav-toggle__bar"></span>
+      <span class="nav-toggle__bar"></span>
+      <span class="nav-toggle__bar"></span>
+    </button>
+  </div>
+</header>
+
+<!-- ── Mobile navigation drawer ─────────────────────────────────────────── -->
+<nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
+  {% for item in config.extra.nav %}
+    {% if item.external %}
+      <a class="mobile-nav__link" href="{{ item.url }}" target="_blank" rel="noopener noreferrer">{{ item.label }}</a>
+    {% else %}
+      <a class="mobile-nav__link" href="{{ item.url | safe }}">{{ item.label }}</a>
+    {% endif %}
+  {% endfor %}
+</nav>
+
+<!-- ── Page content ──────────────────────────────────────────────────────── -->
+<main class="page" id="main-content">
+  {% block content %}{% endblock %}
+</main>
+
+<!-- ── Site footer ───────────────────────────────────────────────────────── -->
+<footer class="site-footer" role="contentinfo">
+  <div class="site-footer__inner">
+    <div class="site-footer__brand">
+      <a class="site-logo" href="{{ get_url(path='/') | safe }}" aria-label="HomeCmdr home">
+        <span class="site-logo__mark" aria-hidden="true">H</span>
+        HomeCmdr
+      </a>
+      <p class="site-footer__tagline">Local home automation built for tinkerers and agents. Self-hosted, open source, no cloud required.</p>
+    </div>
+
+    <div>
+      <p class="site-footer__heading">Docs</p>
+      <ul class="site-footer__links">
+        <li><a href="{{ get_url(path='/installation/') | safe }}">Installation</a></li>
+        <li><a href="{{ get_url(path='/docs/') | safe }}">User guide</a></li>
+        <li><a href="{{ get_url(path='/docs/configuration/') | safe }}">Configuration</a></li>
+        <li><a href="{{ get_url(path='/docs/scenes/') | safe }}">Scenes</a></li>
+        <li><a href="{{ get_url(path='/docs/automations/') | safe }}">Automations</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <p class="site-footer__heading">Developers</p>
+      <ul class="site-footer__links">
+        <li><a href="{{ get_url(path='/developers/') | safe }}">Overview</a></li>
+        <li><a href="{{ get_url(path='/developers/api-reference/') | safe }}">API reference</a></li>
+        <li><a href="{{ get_url(path='/developers/adapter-authoring/') | safe }}">Adapter authoring</a></li>
+        <li><a href="{{ get_url(path='/developers/plugins/') | safe }}">Official plugins</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <p class="site-footer__heading">GitHub</p>
+      <ul class="site-footer__links">
+        <li><a href="{{ config.extra.repo_api }}" target="_blank" rel="noopener noreferrer">homecmdr-api</a></li>
+        <li><a href="{{ config.extra.repo_cli }}" target="_blank" rel="noopener noreferrer">homecmdr-cli</a></li>
+        <li><a href="{{ config.extra.repo_dash }}" target="_blank" rel="noopener noreferrer">homecmdr-dash</a></li>
+        <li><a href="{{ config.extra.repo_adapters }}" target="_blank" rel="noopener noreferrer">adapters</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="site-footer__bottom">
+    <span>HomeCmdr — open source home automation</span>
+    <a href="{{ config.extra.github_org }}" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </div>
+</footer>
+
+<script src="{{ get_url(path='js/nav.js') | safe }}" defer></script>
+{% block extra_js %}{% endblock %}
+
+</body>
+</html>

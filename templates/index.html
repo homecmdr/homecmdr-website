@@ -1,0 +1,235 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ get_url(path='css/landing.css') | safe }}">
+{% endblock %}
+
+{% block content %}
+
+<!-- ── Hero ──────────────────────────────────────────────────────────────── -->
+<section class="hero">
+  <span class="hero__eyebrow">Open source &amp; self-hosted</span>
+  <h1 class="hero__title">Local home automation built for <em>tinkerers and agents</em></h1>
+  <p class="hero__subtitle">
+    HomeCmdr is a Rust-powered home automation server you run on your own hardware.
+    Adapter-driven, Lua-scriptable, with a built-in MCP server so your AI agent
+    can control your home alongside you.
+  </p>
+
+  <div class="hero__actions">
+    <a class="btn btn--primary" href="{{ get_url(path='/installation/') | safe }}">Get started</a>
+    <a class="btn btn--secondary" href="{{ get_url(path='/docs/') | safe }}">Read the docs</a>
+  </div>
+
+  <div class="hero__install">
+    <code>curl -sSf https://raw.githubusercontent.com/homecmdr/homecmdr-cli/main/install.sh | bash</code>
+    <span class="hero__install-label">Linux &bull; x86-64, aarch64, armv7</span>
+  </div>
+</section>
+
+<!-- ── Features ──────────────────────────────────────────────────────────── -->
+<section class="section">
+  <div class="section__inner">
+    <div class="section__header">
+      <p class="section__eyebrow">Why HomeCmdr</p>
+      <h2 class="section__title">Everything in one place, nothing in the cloud</h2>
+      <p class="section__desc">HomeCmdr runs entirely on your local network. Your device state, your history, your automations — all on hardware you control.</p>
+    </div>
+
+    <div class="features">
+      <div class="feature-card">
+        <div class="feature-card__icon" aria-hidden="true">&#127968;</div>
+        <h3 class="feature-card__title">Local-first</h3>
+        <p class="feature-card__desc">Runs on a Raspberry Pi, home server, or any Linux box. No account sign-up, no subscription, no data leaving your network.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-card__icon" aria-hidden="true">&#9881;</div>
+        <h3 class="feature-card__title">Compile-time plugins</h3>
+        <p class="feature-card__desc">Adapters are Rust crates linked into your binary at build time. You get one lean, self-contained executable with only the integrations you actually use.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-card__icon" aria-hidden="true">&#128196;</div>
+        <h3 class="feature-card__title">Lua scripting</h3>
+        <p class="feature-card__desc">Write scenes and automations in Lua 5.4. Trigger on device state changes, cron schedules, sunrise/sunset, or a plain time interval — no custom DSL to learn.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-card__icon" aria-hidden="true">&#129302;</div>
+        <h3 class="feature-card__title">AI-ready</h3>
+        <p class="feature-card__desc">A built-in MCP server exposes device control, scene execution, and adapter management to any MCP-compatible AI agent. HomeCmdr speaks both human and machine.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── How it works ──────────────────────────────────────────────────────── -->
+<section class="section section--alt">
+  <div class="section__inner">
+    <div class="section__header">
+      <p class="section__eyebrow">Getting started</p>
+      <h2 class="section__title">Up and running in four commands</h2>
+      <p class="section__desc">The CLI handles everything: downloading source, configuring plugins, building the binary, and installing the systemd service.</p>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step__number" aria-hidden="true">1</div>
+        <h3 class="step__title">Install the CLI</h3>
+        <p class="step__desc">Download the pre-built <code>homecmdr</code> binary for your architecture with a single curl command.</p>
+        <div class="step__code">curl -sSf .../install.sh | bash</div>
+      </div>
+
+      <div class="step">
+        <div class="step__number" aria-hidden="true">2</div>
+        <h3 class="step__title">Initialise your workspace</h3>
+        <p class="step__desc">Download the API source, answer a few prompts for timezone and location, and get a generated master key automatically.</p>
+        <div class="step__code">homecmdr init</div>
+      </div>
+
+      <div class="step">
+        <div class="step__number" aria-hidden="true">3</div>
+        <h3 class="step__title">Add plugins</h3>
+        <p class="step__desc">Pull official plugins from the registry. The CLI prompts for each config value and patches your workspace automatically.</p>
+        <div class="step__code">homecmdr plugin add zigbee2mqtt</div>
+      </div>
+
+      <div class="step">
+        <div class="step__number" aria-hidden="true">4</div>
+        <h3 class="step__title">Build &amp; deploy</h3>
+        <p class="step__desc">Compile an optimised binary and install it as a systemd service that starts on boot.</p>
+        <div class="step__code">homecmdr build --release
+homecmdr service install</div>
+      </div>
+    </div>
+
+    <div style="text-align:center; margin-top: 3rem;">
+      <a class="btn btn--primary" href="{{ get_url(path='/installation/') | safe }}">Full installation guide</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Plugins ────────────────────────────────────────────────────────────── -->
+<section class="section">
+  <div class="section__inner">
+    <div class="section__header">
+      <p class="section__eyebrow">Official plugins</p>
+      <h2 class="section__title">Ready-made integrations</h2>
+      <p class="section__desc">Pull any official plugin with one command. More are added to the registry regularly.</p>
+    </div>
+
+    <div class="plugins">
+      <a class="plugin-card" href="{{ get_url(path='/developers/plugins/elgato-lights/') | safe }}">
+        <span class="plugin-card__tag">Lighting</span>
+        <p class="plugin-card__name">Elgato Key Light</p>
+        <p class="plugin-card__desc">Control Elgato Key Light and Key Light Air devices over the local network. Supports power, brightness, and colour temperature.</p>
+      </a>
+
+      <a class="plugin-card" href="{{ get_url(path='/developers/plugins/zigbee2mqtt/') | safe }}">
+        <span class="plugin-card__tag">Zigbee</span>
+        <p class="plugin-card__name">Zigbee2MQTT</p>
+        <p class="plugin-card__desc">MQTT-backed adapter for the full range of Zigbee devices managed by your Zigbee2MQTT instance.</p>
+      </a>
+
+      <a class="plugin-card" href="{{ get_url(path='/developers/plugins/roku-tv/') | safe }}">
+        <span class="plugin-card__tag">Media</span>
+        <p class="plugin-card__name">Roku TV</p>
+        <p class="plugin-card__desc">Power control for Roku TVs via the ECP HTTP API. Turn your TV on or off as part of scenes and automations.</p>
+      </a>
+
+      <a class="plugin-card" href="{{ get_url(path='/developers/plugins/ollama/') | safe }}">
+        <span class="plugin-card__tag">AI / LLM</span>
+        <p class="plugin-card__name">Ollama</p>
+        <p class="plugin-card__desc">Service-style Lua access to a local Ollama instance. Ask questions, analyse images, and build LLM-powered automations.</p>
+      </a>
+
+      <a class="plugin-card" href="{{ get_url(path='/docs/configuration/') | safe }}">
+        <span class="plugin-card__tag">Bundled</span>
+        <p class="plugin-card__name">Open-Meteo Weather</p>
+        <p class="plugin-card__desc">Fetches local weather conditions and forecasts from the free Open-Meteo API. No API key required.</p>
+      </a>
+
+      <a class="plugin-card" href="{{ get_url(path='/developers/adapter-authoring/') | safe }}">
+        <span class="plugin-card__tag">DIY</span>
+        <p class="plugin-card__name">Build your own</p>
+        <p class="plugin-card__desc">The adapter API is straightforward Rust. Read the authoring guide and add any device or service your home needs.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Dashboard ─────────────────────────────────────────────────────────── -->
+<section class="section section--alt">
+  <div class="section__inner">
+    <div class="section__header">
+      <p class="section__eyebrow">Dashboard</p>
+      <h2 class="section__title">A reference dashboard, ready to extend</h2>
+      <p class="section__desc">
+        HomeCmdr ships a fully functional reference dashboard built with Alpine.js and vanilla CSS — no build step, no npm, just a static directory you serve.
+        Use it as-is or as the starting point for your own interface.
+      </p>
+    </div>
+
+    <div class="features" style="max-width: 56rem; margin: 0 auto;">
+      <div class="feature-card">
+        <h3 class="feature-card__title">Devices &amp; rooms</h3>
+        <p class="feature-card__desc">All devices grouped by room. Toggle power, set brightness, adjust colour temperature — live via WebSocket.</p>
+      </div>
+      <div class="feature-card">
+        <h3 class="feature-card__title">Scenes</h3>
+        <p class="feature-card__desc">List all loaded Lua scenes and execute them with a single click.</p>
+      </div>
+      <div class="feature-card">
+        <h3 class="feature-card__title">Live event feed</h3>
+        <p class="feature-card__desc">Stream of real-time events from the WebSocket endpoint — device state changes, adapter lifecycle, and more.</p>
+      </div>
+    </div>
+
+    <div style="text-align:center; margin-top: 2.5rem;">
+      <a class="btn btn--secondary" href="{{ config.extra.repo_dash }}" target="_blank" rel="noopener noreferrer">View on GitHub</a>
+      <a class="btn btn--secondary" href="{{ get_url(path='/docs/dashboard/') | safe }}" style="margin-left:1rem;">Dashboard docs</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Ecosystem ─────────────────────────────────────────────────────────── -->
+<section class="section">
+  <div class="section__inner">
+    <div class="section__header">
+      <p class="section__eyebrow">Ecosystem</p>
+      <h2 class="section__title">All the pieces</h2>
+    </div>
+
+    <div class="ecosystem">
+      <a class="ecosystem-card" href="{{ config.extra.repo_api }}" target="_blank" rel="noopener noreferrer">
+        <p class="ecosystem-card__title">homecmdr-api</p>
+        <p class="ecosystem-card__desc">The runtime: HTTP API, WebSocket event stream, Lua host, MCP server, persistence.</p>
+      </a>
+      <a class="ecosystem-card" href="{{ config.extra.repo_cli }}" target="_blank" rel="noopener noreferrer">
+        <p class="ecosystem-card__title">homecmdr-cli</p>
+        <p class="ecosystem-card__desc">The installer and workspace manager. Handles plugins, builds, and systemd deployment.</p>
+      </a>
+      <a class="ecosystem-card" href="{{ config.extra.repo_dash }}" target="_blank" rel="noopener noreferrer">
+        <p class="ecosystem-card__title">homecmdr-dash</p>
+        <p class="ecosystem-card__desc">Reference dashboard. Alpine.js + vanilla CSS. No build step — just serve the directory.</p>
+      </a>
+      <a class="ecosystem-card" href="{{ config.extra.repo_adapters }}" target="_blank" rel="noopener noreferrer">
+        <p class="ecosystem-card__title">adapters</p>
+        <p class="ecosystem-card__desc">Official adapter registry. Browse available plugins, view source, or submit your own.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ────────────────────────────────────────────────────────────────── -->
+<section class="cta-banner">
+  <h2 class="cta-banner__title">Ready to take control of your home?</h2>
+  <p class="cta-banner__desc">Install HomeCmdr in minutes. No cloud, no subscription, no lock-in.</p>
+  <div class="cta-banner__actions">
+    <a class="btn btn--primary" href="{{ get_url(path='/installation/') | safe }}">Get started</a>
+    <a class="btn btn--secondary" href="{{ get_url(path='/docs/') | safe }}">Browse the docs</a>
+  </div>
+</section>
+
+{% endblock %}

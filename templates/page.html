@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ get_url(path='css/docs.css') | safe }}">
+{% endblock %}
+
+{% block content %}
+<div class="docs-layout">
+
+  <!-- ── Sidebar ──────────────────────────────────────────────────────────── -->
+  <aside class="docs-sidebar" aria-label="Documentation navigation">
+    {% set ancestors = page.ancestors %}
+
+    {# Resolve the top-level section to build consistent sidebar nav #}
+    {% if ancestors | length > 0 %}
+      {% set root_section_path = ancestors | first %}
+      {% set root_section = get_section(path=root_section_path) %}
+
+      <div class="sidebar-section">
+        <p class="sidebar-section__heading">{{ root_section.title }}</p>
+        <ul class="sidebar-nav" role="list">
+          {% for p in root_section.pages | sort(attribute="extra.weight") %}
+          <li class="sidebar-nav__item">
+            <a href="{{ p.permalink | safe }}"
+               {% if p.permalink == page.permalink %}aria-current="page"{% endif %}>
+              {{ p.title }}
+            </a>
+          </li>
+          {% endfor %}
+
+          {% for subsection_path in root_section.subsections %}
+            {% set sub = get_section(path=subsection_path) %}
+            <li class="sidebar-nav__item">
+              <a href="{{ sub.permalink | safe }}"
+                 class="{% if page.permalink is starting_with(sub.permalink) %}is-active{% endif %}">
+                {{ sub.title }}
+              </a>
+            </li>
+            {% if page.permalink is starting_with(sub.permalink) %}
+              {% for sp in sub.pages | sort(attribute="extra.weight") %}
+              <li class="sidebar-nav__item sidebar-nav__item--child">
+                <a href="{{ sp.permalink | safe }}"
+                   {% if sp.permalink == page.permalink %}aria-current="page"{% endif %}>
+                  {{ sp.title }}
+                </a>
+              </li>
+              {% endfor %}
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+  </aside>
+
+  <!-- ── Main ─────────────────────────────────────────────────────────────── -->
+  <article class="docs-main">
+
+    <!-- Breadcrumbs -->
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="{{ get_url(path='/') | safe }}">Home</a>
+      <span class="breadcrumbs__sep" aria-hidden="true">/</span>
+      {% for ancestor_path in ancestors %}
+        {% set ancestor = get_section(path=ancestor_path) %}
+        <a href="{{ ancestor.permalink | safe }}">{{ ancestor.title }}</a>
+        <span class="breadcrumbs__sep" aria-hidden="true">/</span>
+      {% endfor %}
+      <span class="breadcrumbs__current" aria-current="page">{{ page.title }}</span>
+    </nav>
+
+    <!-- Content -->
+    <div class="prose">
+      <h1>{{ page.title }}</h1>
+      {{ page.content | safe }}
+    </div>
+
+    <!-- Prev / Next -->
+    {% if page.lower or page.higher %}
+    <nav class="docs-nav-footer" aria-label="Next and previous pages">
+      {% if page.higher %}
+      <a class="docs-nav-footer__link" href="{{ page.higher.permalink | safe }}">
+        <span class="docs-nav-footer__label">&#8592; Previous</span>
+        <span class="docs-nav-footer__title">{{ page.higher.title }}</span>
+      </a>
+      {% else %}
+      <div></div>
+      {% endif %}
+
+      {% if page.lower %}
+      <a class="docs-nav-footer__link docs-nav-footer__link--next" href="{{ page.lower.permalink | safe }}">
+        <span class="docs-nav-footer__label">Next &#8594;</span>
+        <span class="docs-nav-footer__title">{{ page.lower.title }}</span>
+      </a>
+      {% endif %}
+    </nav>
+    {% endif %}
+
+  </article>
+
+</div>
+{% endblock %}
