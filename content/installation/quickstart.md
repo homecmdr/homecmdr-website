@@ -66,7 +66,7 @@ homecmdr plugin add elgato-lights
 
 For each plugin, the CLI:
 
-1. Fetches the plugin from the [official registry](https://github.com/homecmdr/adapters)
+1. Fetches the plugin from the [official registry](https://github.com/homecmdr/plugins)
 2. Extracts the crate into your workspace
 3. Patches the necessary `Cargo.toml` files automatically
 4. Prompts interactively for every config value (host, credentials, poll interval, etc.)

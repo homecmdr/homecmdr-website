@@ -17,7 +17,7 @@ github_org = "https://github.com/homecmdr"
 repo_api = "https://github.com/homecmdr/homecmdr-api"
 repo_cli = "https://github.com/homecmdr/homecmdr-cli"
 repo_dash = "https://github.com/homecmdr/homecmdr-dash"
-repo_adapters = "https://github.com/homecmdr/adapters"
+repo_plugins = "https://github.com/homecmdr/plugins"
 
 nav = [
   { label = "Installation", url = "/installation/" },

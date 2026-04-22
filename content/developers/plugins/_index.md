@@ -5,11 +5,10 @@ sort_by = "weight"
 template = "section.html"
 +++
 
-Official adapters are standalone Rust crates maintained in the [homecmdr/adapters](https://github.com/homecmdr/adapters) registry and installed into a workspace with the HomeCmdr CLI:
+Official plugins are WASM binaries maintained in the [homecmdr/plugins](https://github.com/homecmdr/plugins) registry and installed into a workspace with the HomeCmdr CLI:
 
 ```bash
-homecmdr pull <adapter-name>
-cargo build
+homecmdr plugin add <plugin-name>
 ```
 
-After pulling, you must also add `use <crate_name> as _;` to `crates/adapters/src/lib.rs` in your workspace.
+No build step required — the CLI downloads the pre-built `.wasm` binary and `.plugin.toml` manifest, prompts for any required config values, and restarts the service if it is running.

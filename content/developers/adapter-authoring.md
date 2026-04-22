@@ -7,7 +7,7 @@ template = "page.html"
 
 This guide covers creating a new adapter crate for HomeCmdr. It reflects the current codebase — not an aspirational plugin system.
 
-> **Publishing an official adapter?** Official adapters live in the [homecmdr/adapters](https://github.com/homecmdr/adapters) registry and are installed into workspaces with `homecmdr pull <adapter-name>`. This guide is for creating an adapter locally in your workspace.
+> **Publishing an official plugin?** Official plugins live in the [homecmdr/plugins](https://github.com/homecmdr/plugins) registry and are installed into workspaces with `homecmdr plugin add <name>`. This guide is for creating an adapter locally in your workspace.
 
 ---
 
